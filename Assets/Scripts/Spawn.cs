@@ -10,10 +10,10 @@ public class Spawn : MonoBehaviour {
     void Start ()
     {
         Instantiate(enemyOrange, transform.position, Quaternion.identity);
-        //nextSpawn = Time.time + spawnRate;
+        nextSpawn = Time.time + spawnRate;
     }
 
-	void Update ()
+    void Update ()
     {
        
 
@@ -21,9 +21,9 @@ public class Spawn : MonoBehaviour {
 
         if(Time.time > nextSpawn)
         {
-            //Instantiate(enemyOrange, transform.position, Quaternion.identity);
-            //nextSpawn += spawnRate;
+            Instantiate(enemyOrange, transform.position, Quaternion.identity);
+            nextSpawn += spawnRate;
 
         }
-	}
+    }
 }
