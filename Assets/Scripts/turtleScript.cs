@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class turtleScript : MonoBehaviour {
 
-    public Transform target;
+   [Header("Atributes")]
     public float range = 10.0f;
+    public float fireRate = 1f;
+    private float fireCountdown = 0f;
+    [Header("EnemyStaff")]
+    public Transform target;
     public string enemyTag = "Enemy";
 
+    public GameObject bulletPref;
+    public Transform SpawnPos;
+
+    
     void Start()
     {
         InvokeRepeating("updateTarget",0.0f,0.5f);
@@ -36,13 +44,34 @@ public class turtleScript : MonoBehaviour {
         {
             target = nearestEnemy.transform;
         }
+        else
+            target = null;
     }
     void Update()
     {
         if (target == null)
             return;
 
+        if (fireCountdown <= 0f)
+        {
+            shoot();
+            fireCountdown = 1f / fireRate;
+
+        }
+        fireCountdown -= Time.deltaTime;
     
+    }
+
+    void shoot()
+    {
+        GameObject BulletGO  = (GameObject)Instantiate(bulletPref, SpawnPos.position, SpawnPos.rotation);
+        bulletScript bullet = BulletGO.GetComponent<bulletScript>();
+
+        if (bullet != null)
+        {
+            bullet.seek(target);
+        }
+        Debug.Log("Shoot!!");
     }
 
     private void OnDrawGizmosSelected() //Selectet para dibujar el gizmo de la selecionada, quitar selected para que aparezca siempre

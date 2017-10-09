@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour {
                 forward = true;
                 check = 0;
                 currentX++;
-                Debug.Log("For");
+                //Debug.Log("For");
                 prevDown = false;
             }
             else if (controller.getLoc(currentX, currentY + 1) && !prevDown)
@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
                 up = true;
                 check = 0;
                 currentY++;
-                Debug.Log("Up");
+                //Debug.Log("Up");
                 prevDown = false;
             }
             else if (controller.getLoc(currentX, currentY - 1))
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour {
                 down = true;
                 check = 0;
                 currentY--;
-                Debug.Log("Down");
+                //Debug.Log("Down");
                 prevDown = true;
             }
 
