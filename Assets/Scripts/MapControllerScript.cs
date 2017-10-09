@@ -63,38 +63,42 @@ public class MapControllerScript : MonoBehaviour {
     void generateMap()
     {
         int perc;
-        do
-        {
-            perc = Random.Range(0, 2);
+        bool lastUp = true, lastDown = true;
 
+        while (lastX < width - 1)
+        {
+            perc = Random.Range(0, 5);
 
             if (perc == 0)//Forward
             {
+                location[lastX, lastY] = state.PATH;
                 lastX++;
-                location[lastX, lastY] = state.PATH;
-
-            }else if(perc == 1 && lastY != 0)//Up
+                lastUp = false;
+                lastDown = false;
+            }
+            else if (perc >0 && perc < 3 && lastY != 0 && !lastUp)//Up
             {
+                location[lastX, lastY] = state.PATH;
                 lastY--;
-                location[lastX, lastY] = state.PATH;
+
+                lastDown = true;
             }
-            else if(perc==2 && lastY != height-1)//Down
+            else if (perc > 2 && perc < 5  && lastY != height - 1 && !lastDown)//Down
             {
-                lastY++;
+
                 location[lastX, lastY] = state.PATH;
+                lastY++;
+                lastUp = true;
             }
+        }
 
-        } while (lastX <= width-1);
-
-
-
-
+        location[lastX, lastY] = state.PATH;
     }
 
 
 
 
-	void Start () {
+    void Start () {
 
 
 
