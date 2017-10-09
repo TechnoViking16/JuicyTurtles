@@ -151,7 +151,7 @@ public class MapControllerScript : MonoBehaviour {
 
         startMap();
         generatePath();
-        //generateRocks();
+        generateRocks();
         printMap();
 
         

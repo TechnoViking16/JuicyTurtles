@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour {
                 Debug.Log("Down");
                 prevDown = true;
             }
-            Debug.Log(" No ENTRA");
+
         }
         else //Mientras se mueve
         {

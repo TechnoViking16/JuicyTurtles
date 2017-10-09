@@ -5,12 +5,12 @@ using UnityEngine;
 public class Spawn : MonoBehaviour {
 
     public GameObject enemyOrange;
-    public float timer;
     public float spawnRate = 5.0f;
     float nextSpawn;
     void Start ()
     {
-        nextSpawn = Time.time + spawnRate;
+        Instantiate(enemyOrange, transform.position, Quaternion.identity);
+        //nextSpawn = Time.time + spawnRate;
     }
 
 	void Update ()
@@ -21,8 +21,8 @@ public class Spawn : MonoBehaviour {
 
         if(Time.time > nextSpawn)
         {
-            Instantiate(enemyOrange, transform.position, Quaternion.identity);
-            nextSpawn += spawnRate;
+            //Instantiate(enemyOrange, transform.position, Quaternion.identity);
+            //nextSpawn += spawnRate;
 
         }
 	}
