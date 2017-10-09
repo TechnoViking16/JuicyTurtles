@@ -10,23 +10,55 @@ public class Enemy : MonoBehaviour {
     public MapControllerScript controller;
 
     private int currentX, currentY;
-    private bool up = false, down = false, forward = false;
+    private bool up = false, down = false, forward = false, prevDown = false;
 
 
 
     void Start() {
         controller = GameObject.FindObjectOfType<MapControllerScript>();
-        check = 0;
+        check = 2;
         currentX = 0;
-        currentY = 3;
+        currentY = controller.height/2;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (check > 1)
+        {
+            //Escojer direccion
+            forward = false;
+            up = false;
+            down = false;
 
-        if (check <= 1)//Mientras se mueve
+            if (controller.getLoc(currentX + 1, currentY))
+            {
+                forward = true;
+                check = 0;
+                currentX++;
+                Debug.Log("For");
+                prevDown = false;
+            }
+            else if (controller.getLoc(currentX, currentY + 1) && !prevDown)
+            {
+                up = true;
+                check = 0;
+                currentY++;
+                Debug.Log("Up");
+                prevDown = false;
+            }
+            else if (controller.getLoc(currentX, currentY - 1))
+            {
+                down = true;
+                check = 0;
+                currentY--;
+                Debug.Log("Down");
+                prevDown = true;
+            }
+            Debug.Log(" No ENTRA");
+        }
+        else //Mientras se mueve
         {
             
             if(forward)
@@ -38,38 +70,5 @@ public class Enemy : MonoBehaviour {
 
             check += moveSpeed;
         }
-        else//Cambiar direccion
-        {
-            forward = false;
-            up = false;
-            down = false;
-
-            if (controller.getLoc(currentX + 1, currentY))
-            {
-                forward = true;
-                check = 0;
-                currentX++;
-                Debug.Log("For");
-            }
-            else if (controller.getLoc(currentX, currentY + 1))
-            {
-                up = true;
-                check = 0;
-                currentY++;
-                Debug.Log("Up");
-            }
-            else if (controller.getLoc(currentX, currentY - 1))
-            {
-                down = true;
-                check = 0;
-                currentY--;
-                Debug.Log("Down");
-            }
-            else
-                Debug.Log(controller.getLoc(currentX, currentY));
-
-
-        }
-
     }
 }
