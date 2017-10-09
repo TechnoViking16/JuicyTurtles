@@ -5,15 +5,25 @@ using UnityEngine;
 public class Spawn : MonoBehaviour {
 
     public GameObject enemyOrange;
-
-	// Use this for initialization
-	void Start ()
+    public float timer;
+    public float spawnRate = 5.0f;
+    float nextSpawn;
+    void Start ()
     {
-        Instantiate(enemyOrange, transform.position, Quaternion.identity);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        nextSpawn = Time.time + spawnRate;
+    }
+
+	void Update ()
+    {
+       
+
+        
+
+        if(Time.time > nextSpawn)
+        {
+            Instantiate(enemyOrange, transform.position, Quaternion.identity);
+            nextSpawn += spawnRate;
+
+        }
 	}
 }
