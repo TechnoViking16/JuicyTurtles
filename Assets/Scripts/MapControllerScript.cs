@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class MapControllerScript : MonoBehaviour {
 
-    public GameObject freeBlock,pathBlock,rockBlock;
+    public GameObject freeBlock,pathBlock,rockBlock,spawn;
     enum state { FREE, PATHh, PATHv,PATHcu,PATHcd, ROCK }
   
     public int width, height,maxRocks;
     public float distance;
-      state[,] location;
+    state[,] location;
 
    public int lastX, lastY;
 
 
+    public bool getLoc(int x, int y)
+    {
 
+        if (location[x, y] == state.FREE || location[x, y] == state.ROCK)
+            return false;
+        else
+            return true;
+    }
     void printMap()
     {
         
@@ -63,6 +70,7 @@ public class MapControllerScript : MonoBehaviour {
         lastX = 0;
         lastY = height/2;
         location[lastX, lastY] = state.PATHh;
+        Instantiate(spawn, new Vector3(lastX, 1, lastY),Quaternion.identity);
 
     }
 
@@ -143,7 +151,7 @@ public class MapControllerScript : MonoBehaviour {
 
         startMap();
         generatePath();
-        generateRocks();
+        //generateRocks();
         printMap();
 
         
