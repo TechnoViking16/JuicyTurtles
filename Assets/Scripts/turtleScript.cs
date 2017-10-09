@@ -4,33 +4,50 @@ using UnityEngine;
 
 public class turtleScript : MonoBehaviour {
 
-    public GameObject bullet;
-    public GameObject target;
-    public float fireRate = 5.0f;
-    public float speed;
-    float nextShot;
-
-   
+    public Transform target;
+    public float range = 10.0f;
+    public string enemyTag = "Enemy";
 
     void Start()
     {
-        nextShot = Time.time + fireRate;
+        InvokeRepeating("updateTarget",0.0f,0.5f);
+
+        //nextShot = Time.time + fireRate;
     }
 
+
+    void updateTarget()
+    {
+        GameObject[] oranges = GameObject.FindGameObjectsWithTag(enemyTag);
+
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+        foreach(GameObject enemy in oranges)
+        {
+            float distanceToenemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToenemy < shortestDistance)
+            {
+                shortestDistance = distanceToenemy;
+                nearestEnemy = enemy;
+            }
+
+        }
+        if (nearestEnemy != null && shortestDistance <= range)
+        {
+            target = nearestEnemy.transform;
+        }
+    }
     void Update()
     {
+        if (target == null)
+            return;
 
-        if (Time.time > nextShot)
-        {
-            Instantiate(bullet, transform.position, Quaternion.identity);
-            nextShot = Time.time + fireRate;
-            float distance = Vector3.Distance(transform.position, target.transform.position);
-            float moduloVector = Mathf.Sqrt(Mathf.Pow(target.transform.position.x - transform.position.x, 2) + Mathf.Pow(transform.position.y - transform.position.y, 2) + Mathf.Pow(transform.position.z - transform.position.z, 2));
+    
+    }
 
-            float unitX = (target.transform.position.x - transform.position.x) / distance;
-            float unitY = (target.transform.position.z - transform.position.z) / distance;
-
-            bullet.transform.position = new Vector3((unitX * speed + target.transform.position.x), target.transform.position.y, (unitY * speed + target.transform.position.z));
-        }
+    private void OnDrawGizmosSelected() //Selectet para dibujar el gizmo de la selecionada, quitar selected para que aparezca siempre
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
