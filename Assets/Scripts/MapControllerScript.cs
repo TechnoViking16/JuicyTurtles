@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MapControllerScript : MonoBehaviour {
 
-    public GameObject freeBlock,pathBlock;
-    enum state { FREE, PATH, ROCK }
+    public GameObject freeBlock,pathBlock,rockBlock;
+    enum state { FREE, PATHh, PATHv,PATHcu,PATHcd, ROCK }
   
-    public int width, height;
+    public int width, height,maxRocks;
     public float distance;
-    state[,] location;
+      state[,] location;
 
-    private int lastX, lastY;
+   public int lastX, lastY;
 
 
 
@@ -27,9 +27,15 @@ public class MapControllerScript : MonoBehaviour {
                     case state.FREE:
                 Instantiate(freeBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
                         break;
+                    case state.ROCK:
+                        Instantiate(rockBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+                        break;
 
-                    case state.PATH:
-                Instantiate(pathBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+                    case state.PATHh:
+                    case state.PATHv:
+                    case state.PATHcu:
+                    case state.PATHcd:
+                        Instantiate(pathBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
                         break;
 
                     default:
@@ -55,15 +61,15 @@ public class MapControllerScript : MonoBehaviour {
         }
 
         lastX = 0;
-        lastY = 3;
-        location[lastX, lastY] = state.PATH;
+        lastY = height/2;
+        location[lastX, lastY] = state.PATHh;
 
     }
 
-    void generateMap()
+    void generatePath()
     {
         int perc;
-        bool lastUp = true, lastDown = true;
+        bool lastUp = true, lastDown = true, lastForward= false;
 
         while (lastX < width - 1)
         {
@@ -71,32 +77,64 @@ public class MapControllerScript : MonoBehaviour {
 
             if (perc == 0)//Forward
             {
-                location[lastX, lastY] = state.PATH;
+                location[lastX, lastY] = state.PATHh;
                 lastX++;
-                lastUp = false;
-                lastDown = false;
+                
+
+                if (lastForward)
+                {
+                    lastUp = false;
+                    lastDown = false;
+                }
+
+                lastForward = true;
             }
-            else if (perc >0 && perc < 3 && lastY != 0 && !lastUp)//Up
+            else if (perc >0 && perc < 3 && lastY != 1 && !lastUp)//Up
             {
-                location[lastX, lastY] = state.PATH;
+                if (lastDown)
+                    location[lastX, lastY] = state.PATHcd;
+                else
+                location[lastX, lastY] = state.PATHv;
                 lastY--;
 
                 lastDown = true;
+                lastForward = false;
             }
-            else if (perc > 2 && perc < 5  && lastY != height - 1 && !lastDown)//Down
+            else if (perc > 2 && perc < 5  && lastY != height - 2 && !lastDown)//Down
             {
+                if(lastUp)
+                    location[lastX, lastY] = state.PATHcu;
+                else
+                location[lastX, lastY] = state.PATHv;
 
-                location[lastX, lastY] = state.PATH;
                 lastY++;
                 lastUp = true;
+                lastForward = false;
             }
         }
 
-        location[lastX, lastY] = state.PATH;
+        location[lastX, lastY] = state.PATHh;
     }
 
 
+    void generateRocks()
+    {
+        int x, y;
+        int i = 0;
+        while (i < maxRocks)
+        {
+            x = Random.Range(0, width);
+            y = Random.Range(0, height);
 
+            if(location[x,y] == state.FREE)
+            {
+                location[x, y] = state.ROCK;
+                i++;
+            }
+
+        }
+
+    }
 
     void Start () {
 
@@ -104,7 +142,8 @@ public class MapControllerScript : MonoBehaviour {
 
 
         startMap();
-        generateMap();
+        generatePath();
+        generateRocks();
         printMap();
 
         
