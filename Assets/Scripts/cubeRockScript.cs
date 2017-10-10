@@ -7,7 +7,7 @@ public class cubeRockScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        Instantiate(rock, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
+       // Instantiate(rock, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
 		
 	}
 	

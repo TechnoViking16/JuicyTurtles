@@ -5,22 +5,24 @@ using UnityEngine;
 public class FreeCubeScript : MonoBehaviour
 {
 
+    public MapControllerScript controller;
 
     GameObject cube;
 
 
     void Start()
     {
+        controller = GameObject.FindObjectOfType<MapControllerScript>();
     }
 
     void HitByRay()
     {
-        Debug.Log("I was hit by a Ray");
+        controller.SendMessage("generateTurtle", transform.position);
     }
 
     void Update()
     {
-
+       
 
 
 

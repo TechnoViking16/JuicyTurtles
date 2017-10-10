@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class turtleScript : MonoBehaviour {
 
-   [Header("Atributes")]
+    [Header("Atributes")]
     public float range = 10.0f;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     [Header("EnemyStaff")]
-    public Transform target;
+    public Enemy target;
     public string enemyTag = "Enemy";
 
     public GameObject bulletPref;
@@ -26,11 +26,11 @@ public class turtleScript : MonoBehaviour {
 
     void updateTarget()
     {
-        GameObject[] oranges = GameObject.FindGameObjectsWithTag(enemyTag);
+        Enemy[] oranges = Enemy.FindObjectsOfType<Enemy>();
 
         float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-        foreach(GameObject enemy in oranges)
+        Enemy nearestEnemy = null;
+        foreach(Enemy enemy in oranges)
         {
             float distanceToenemy = Vector3.Distance(transform.position, enemy.transform.position);
             if (distanceToenemy < shortestDistance)
@@ -42,7 +42,7 @@ public class turtleScript : MonoBehaviour {
         }
         if (nearestEnemy != null && shortestDistance <= range)
         {
-            target = nearestEnemy.transform;
+            target = nearestEnemy;
         }
         else
             target = null;
@@ -55,6 +55,7 @@ public class turtleScript : MonoBehaviour {
         if (fireCountdown <= 0f)
         {
             shoot();
+            
             fireCountdown = 1f / fireRate;
 
         }

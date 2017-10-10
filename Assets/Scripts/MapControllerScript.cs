@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapControllerScript : MonoBehaviour
 {
 
-    public GameObject freeBlock, pathBlock, rockBlock, spawn;
+    public GameObject freeBlock, pathBlock, rockBlock, spawn, turtle;
     enum state { FREE, PATHh, PATHv, PATHcu, PATHcd, ROCK }
 
     public int width, height, maxRocks;
@@ -125,6 +125,11 @@ public class MapControllerScript : MonoBehaviour
         }
 
         location[lastX, lastY] = state.PATHh;
+    }
+
+    void generateTurtle(Vector3 pos)
+    {
+        Instantiate(turtle, pos + new Vector3(0,1,0), Quaternion.identity);
     }
 
 

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class bulletScript : MonoBehaviour {
 
-    private Transform target;
-    public float speed = 50;
-
+    private Enemy target;
+    public float speed = 50, damage;
+    public bool hit = false;
     public GameObject ImpactEffect;
 
-    public void seek (Transform _target)
+    public void seek (Enemy _target)
     {
         target = _target;
 
@@ -24,7 +24,7 @@ public class bulletScript : MonoBehaviour {
             return;
         }
 
-        Vector3 dir = target.position - transform.position;
+        Vector3 dir = target.transform.position - transform.position;
         float distanceFrame = speed * Time.deltaTime;
 
         if (dir.magnitude <= distanceFrame)
@@ -37,8 +37,11 @@ public class bulletScript : MonoBehaviour {
 
     void HitTarget()
     {
+        
+
         GameObject effect = (GameObject)Instantiate(ImpactEffect, transform.position, transform.rotation);
-        Destroy(effect,1f);
+        Destroy(effect,0.8f);
+        target.life -= damage;
         Destroy(gameObject);
         Debug.Log("HIT");
     }
