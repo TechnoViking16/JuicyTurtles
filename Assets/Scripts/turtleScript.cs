@@ -80,4 +80,8 @@ public class turtleScript : MonoBehaviour {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+    void HitByRay()
+    {
+        Destroy(gameObject);
+    }
 }

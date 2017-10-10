@@ -8,16 +8,24 @@ public class FreeCubeScript : MonoBehaviour
     public MapControllerScript controller;
 
     GameObject cube;
-
+    bool used= false;
 
     void Start()
     {
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.SetColor("_Color", new Color(Random.Range(0f, 50f) / 255f, Random.Range(200f, 255f) / 255f, Random.Range(30f,150f) / 255f, 1));
+
+
         controller = GameObject.FindObjectOfType<MapControllerScript>();
     }
 
     void HitByRay()
     {
-        controller.SendMessage("generateTurtle", transform.position);
+        if (!used)
+        {
+            controller.SendMessage("generateTurtle", transform.position);
+            used = true;
+        }
     }
 
     void Update()

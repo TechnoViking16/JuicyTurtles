@@ -41,7 +41,7 @@ public class bulletScript : MonoBehaviour {
 
         GameObject effect = (GameObject)Instantiate(ImpactEffect, transform.position, transform.rotation);
         Destroy(effect,0.8f);
-        target.life -= damage;
+        target.life -= (int)damage;
         Destroy(gameObject);
         Debug.Log("HIT");
     }

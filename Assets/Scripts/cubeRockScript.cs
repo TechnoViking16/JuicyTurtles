@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class cubeRockScript : MonoBehaviour {
     public GameObject rock; 
-	// Use this for initialization
+
 	void Start () {
 
-       // Instantiate(rock, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Quaternion.identity);
-		
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.SetColor("_Color", new Color(Random.Range(80f,160f) / 255f, 0f / 255f, 255f / 255f, 1));
 	}
-	
-	// Update is called once per frame
-	void Update () {
+ 
+    void Update () {
 		
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    public float life;
+    public int life, damage, juice;
     public float moveSpeed;
     private float check;
     public MapControllerScript controller;
@@ -79,6 +79,8 @@ public class Enemy : MonoBehaviour {
             }
             else//Muere
             {
+
+                controller.currentJuice += juice;
                 Destroy(gameObject);
             }
         }
@@ -86,6 +88,7 @@ public class Enemy : MonoBehaviour {
 
         else//LLega al final
         {
+            controller.currentLife -= damage;
             Destroy(gameObject);
         }
     }
