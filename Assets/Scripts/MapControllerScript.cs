@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapControllerScript : MonoBehaviour
 {
 
-    public GameObject freeBlock, pathBlock, rockBlock, spawn, turtle1, turtle2, turtle3, turtle4;
+    public GameObject freeBlock, pathBlock, rockBlock, backBlock, spawn, turtle1, turtle2, turtle3, turtle4;
     enum state { FREE, PATHh, PATHv, PATHcu, PATHcd, ROCK }
 
     public int width, height,maxLife,currentLife, maxRocks, maxJuice, startingJuice, currentJuice,score, cost1, cost2, cost3, cost4;
@@ -198,6 +198,21 @@ public class MapControllerScript : MonoBehaviour
                 }
             }
 
+    void background()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Instantiate(backBlock, new Vector3(i+width, Random.Range(-1, 2), j),Quaternion.identity);
+                Instantiate(backBlock, new Vector3(i - width, Random.Range(-1, 2), j), Quaternion.identity);
+                Instantiate(backBlock, new Vector3(i, Random.Range(-1, 2), j + height), Quaternion.identity);
+            }
+        }
+
+
+
+    }
             void Start()
             {
 
@@ -208,6 +223,7 @@ public class MapControllerScript : MonoBehaviour
                 generatePath();
                 generateRocks();
                 printMap();
+                background();
 
 
             }

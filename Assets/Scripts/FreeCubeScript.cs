@@ -7,8 +7,7 @@ public class FreeCubeScript : MonoBehaviour
 
     public MapControllerScript controller;
 
-    GameObject cube;
-    bool used= false;
+
 
     void Start()
     {
@@ -21,11 +20,9 @@ public class FreeCubeScript : MonoBehaviour
 
     void HitByRay()
     {
-        if (!used)
-        {
+       
             controller.SendMessage("generateTurtle", transform.position);
-            used = true;
-        }
+         
     }
 
     void Update()
