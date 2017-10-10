@@ -2,18 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FreeCubeScript : MonoBehaviour {
-
-    
-
+public class FreeCubeScript : MonoBehaviour
+{
 
 
-	void Start () {
-       
-	}
-	
-	
-	void Update () {
-		
-	}
+    GameObject cube;
+
+
+    void Start()
+    {
+    }
+
+    void HitByRay()
+    {
+        Debug.Log("I was hit by a Ray");
+    }
+
+    void Update()
+    {
+
+
+
+
+    }
 }

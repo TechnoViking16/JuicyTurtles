@@ -38,7 +38,7 @@ public class bulletScript : MonoBehaviour {
     void HitTarget()
     {
         GameObject effect = (GameObject)Instantiate(ImpactEffect, transform.position, transform.rotation);
-        Destroy(effect,2f);
+        Destroy(effect,1f);
         Destroy(gameObject);
         Debug.Log("HIT");
     }

@@ -15,10 +15,6 @@ public class Spawn : MonoBehaviour {
 
     void Update ()
     {
-       
-
-        
-
         if(Time.time > nextSpawn)
         {
             Instantiate(enemyOrange, transform.position, Quaternion.identity);

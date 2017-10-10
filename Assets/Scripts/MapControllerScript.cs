@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapControllerScript : MonoBehaviour {
+public class MapControllerScript : MonoBehaviour
+{
 
-    public GameObject freeBlock,pathBlock,rockBlock,spawn;
-    enum state { FREE, PATHh, PATHv,PATHcu,PATHcd, ROCK }
-  
-    public int width, height,maxRocks;
+    public GameObject freeBlock, pathBlock, rockBlock, spawn;
+    enum state { FREE, PATHh, PATHv, PATHcu, PATHcd, ROCK }
+
+    public int width, height, maxRocks;
     public float distance;
     state[,] location;
+    RaycastHit hit;
 
-   public int lastX, lastY;
+    public int lastX, lastY;
 
 
     public bool getLoc(int x, int y)
@@ -24,15 +26,16 @@ public class MapControllerScript : MonoBehaviour {
     }
     void printMap()
     {
-        
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
 
-                switch (location[i, j]) {
+                switch (location[i, j])
+                {
                     case state.FREE:
-                Instantiate(freeBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
+                        Instantiate(freeBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
                         break;
                     case state.ROCK:
                         Instantiate(rockBlock, new Vector3(i * distance, 0, j * distance), Quaternion.identity);
@@ -48,7 +51,7 @@ public class MapControllerScript : MonoBehaviour {
                     default:
                         break;
 
-            }
+                }
 
 
             }
@@ -68,16 +71,16 @@ public class MapControllerScript : MonoBehaviour {
         }
 
         lastX = 0;
-        lastY = height/2;
+        lastY = height / 2;
         location[lastX, lastY] = state.PATHh;
-        Instantiate(spawn, new Vector3(lastX, 1, lastY),Quaternion.identity);
+        Instantiate(spawn, new Vector3(lastX, 1, lastY), Quaternion.identity);
 
     }
 
     void generatePath()
     {
         int perc;
-        bool lastUp = true, lastDown = true, lastForward= false;
+        bool lastUp = true, lastDown = true, lastForward = false;
 
         while (lastX < width - 1)
         {
@@ -87,7 +90,7 @@ public class MapControllerScript : MonoBehaviour {
             {
                 location[lastX, lastY] = state.PATHh;
                 lastX++;
-                
+
 
                 if (lastForward)
                 {
@@ -97,23 +100,23 @@ public class MapControllerScript : MonoBehaviour {
 
                 lastForward = true;
             }
-            else if (perc >0 && perc < 3 && lastY != 1 && !lastUp)//Up
+            else if (perc > 0 && perc < 3 && lastY != 1 && !lastUp)//Up
             {
                 if (lastDown)
                     location[lastX, lastY] = state.PATHcd;
                 else
-                location[lastX, lastY] = state.PATHv;
+                    location[lastX, lastY] = state.PATHv;
                 lastY--;
 
                 lastDown = true;
                 lastForward = false;
             }
-            else if (perc > 2 && perc < 5  && lastY != height - 2 && !lastDown)//Down
+            else if (perc > 2 && perc < 5 && lastY != height - 2 && !lastDown)//Down
             {
-                if(lastUp)
+                if (lastUp)
                     location[lastX, lastY] = state.PATHcu;
                 else
-                location[lastX, lastY] = state.PATHv;
+                    location[lastX, lastY] = state.PATHv;
 
                 lastY++;
                 lastUp = true;
@@ -134,7 +137,7 @@ public class MapControllerScript : MonoBehaviour {
             x = Random.Range(0, width);
             y = Random.Range(0, height);
 
-            if(location[x,y] == state.FREE)
+            if (location[x, y] == state.FREE)
             {
                 location[x, y] = state.ROCK;
                 i++;
@@ -144,7 +147,8 @@ public class MapControllerScript : MonoBehaviour {
 
     }
 
-    void Start () {
+    void Start()
+    {
 
 
 
@@ -154,13 +158,30 @@ public class MapControllerScript : MonoBehaviour {
         generateRocks();
         printMap();
 
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.cyan);
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (Physics.Raycast(ray, out hit, 1000))
+            {
+
+                if (hit.collider.gameObject.CompareTag("cube"))
+                {
+
+                    hit.collider.gameObject.SendMessage("HitByRay");
+                }
+
+            }
 
 
-	}
+
+        }
+    }
 }
