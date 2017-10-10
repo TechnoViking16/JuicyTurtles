@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 060beac33884c144b92dd1f1c9ae3992
+timeCreated: 1507624412
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 0
+  fontName: Outrun future
+  fontNames:
+  - Outrun future
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 3
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
