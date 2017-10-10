@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapControllerScript : MonoBehaviour
 {
 
-    public GameObject freeBlock, pathBlock, rockBlock, backBlock, spawn, turtle1, turtle2, turtle3, turtle4;
+    public GameObject freeBlock, pathBlock, rockBlock, backBlock, backTwo, spawn, turtle1, turtle2, turtle3, turtle4;
     enum state { FREE, PATHh, PATHv, PATHcu, PATHcd, ROCK }
 
     public int width, height,maxLife,currentLife, maxRocks, maxJuice, startingJuice, currentJuice,score, cost1, cost2, cost3, cost4;
@@ -14,7 +14,7 @@ public class MapControllerScript : MonoBehaviour
     RaycastHit hit;
     public bool button1 = false, button2 = false, button3 = false, button4 = false;
     public int lastX, lastY;
-    bool deleteTurtl = false;
+
 
 
     public bool getLoc(int x, int y)
@@ -204,9 +204,14 @@ public class MapControllerScript : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Instantiate(backBlock, new Vector3(i+width, Random.Range(-1, 2), j),Quaternion.identity);
+                Instantiate(backBlock, new Vector3(i  +width, Random.Range(-1, 2), j),Quaternion.identity);
                 Instantiate(backBlock, new Vector3(i - width, Random.Range(-1, 2), j), Quaternion.identity);
                 Instantiate(backBlock, new Vector3(i, Random.Range(-1, 2), j + height), Quaternion.identity);
+				Instantiate(backTwo, new Vector3(i, Random.Range(-1, 1), j - height), Quaternion.identity);
+				Instantiate(backBlock, new Vector3(i - width, Random.Range(-1, 2), j + height), Quaternion.identity);
+				Instantiate(backBlock, new Vector3(i + width, Random.Range(-1, 2), j + height), Quaternion.identity);
+				Instantiate(backTwo, new Vector3(i - width, Random.Range(-1, 1), j - height), Quaternion.identity);
+				Instantiate(backTwo, new Vector3(i + width, Random.Range(-1, 1), j - height), Quaternion.identity);
             }
         }
 
