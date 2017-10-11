@@ -224,6 +224,9 @@ public class MapControllerScript : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.cyan);
 
 
+
+
+
         if (Input.GetMouseButtonUp(1))
         {
 

@@ -37,6 +37,10 @@ public class turtleScript : MonoBehaviour {
             {
                 shortestDistance = distanceToenemy;
                 nearestEnemy = enemy;
+
+
+
+
             }
 
         }
@@ -49,8 +53,13 @@ public class turtleScript : MonoBehaviour {
     }
     void Update()
     {
-        if (target == null)
-            return;
+		if (target == null)
+			return;
+		else {
+			
+
+			transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation((target.transform.position - transform.position).normalized ) ,Time.deltaTime );
+		}
 
         if (fireCountdown <= 0f)
         {
