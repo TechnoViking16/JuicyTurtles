@@ -29,6 +29,7 @@ public class Spawn : MonoBehaviour {
         if(totalEnemyCount == aux)
         {
             waveCount++;
+            aux += waveEnemyCount;
         }
     }
 
@@ -80,14 +81,17 @@ public class Spawn : MonoBehaviour {
                 perN = 30;
                 perB = 30;
                 perG = 0;
+                waveEnemyCount = 5;
 
                 break;
 
             case 3:
-                perS = 40;
-                perN = 30;
-                perB = 20;
-                perG = 10;
+                
+                perS = 0;
+                perN = 0;
+                perB = 50;
+                perG = 50;
+                waveEnemyCount = 11;
 
                 break;
 
@@ -97,7 +101,7 @@ public class Spawn : MonoBehaviour {
                 perN = 30;
                 perB = 30;
                 perG = 10;
-
+                waveEnemyCount++;
                 break;
 
         }
