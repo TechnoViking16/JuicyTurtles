@@ -53,8 +53,6 @@ public class MapControllerScript : MonoBehaviour
                         break;
 
                 }
-
-
             }
         }
     }
@@ -124,7 +122,6 @@ public class MapControllerScript : MonoBehaviour
                 lastForward = false;
             }
         }
-
         location[lastX, lastY] = state.PATHh;
     }
 
@@ -132,71 +129,66 @@ public class MapControllerScript : MonoBehaviour
     {
         if (button1 && currentJuice >= cost1)
         {
-            Instantiate(turtle1, pos + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(turtle1, pos + new Vector3(0, 1, 0), Quaternion.Euler(-90, 90, 0));
             currentJuice -= cost1;
         }
         else if (button2 && currentJuice >= cost2)
         {
-            Instantiate(turtle2, pos + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(turtle2, pos + new Vector3(0, 1, 0), Quaternion.Euler(-90, 90, 0));
             currentJuice -= cost2;
         }
         else if (button3 && currentJuice >= cost3)
         {
-            Instantiate(turtle3, pos + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(turtle3, pos + new Vector3(0, 1, 0), Quaternion.Euler(-90, 90, 0));
             currentJuice -= cost3;
         }
         else if (button4 && currentJuice >= cost4)
         {
-            Instantiate(turtle4, pos + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(turtle4, pos + new Vector3(0, 1, 0), Quaternion.Euler(-90, 90, 0));
             currentJuice -= cost4;
         }
+    }
 
 
+    void generateRocks()
+    {
+        int x, y;
+        int i = 0;
+        while (i < maxRocks)
+        {
+            x = Random.Range(0, width);
+            y = Random.Range(0, height);
+
+            if (location[x, y] == state.FREE)
+            {
+                location[x, y] = state.ROCK;
+                i++;
+            }
         }
+    }
 
+    void ButtonPressed(int n)
+    {
+        switch (n)
+        {
+            case 1:
+                button1 = true;
+                break;
 
-            void generateRocks()
-            {
-                int x, y;
-                int i = 0;
-                while (i < maxRocks)
-                {
-                    x = Random.Range(0, width);
-                    y = Random.Range(0, height);
+            case 2:
+                button2 = true;
+                break;
+            case 3:
+                button3 = true;
+                break;
+            case 4:
+                button4 = true;
+                break;
 
-                    if (location[x, y] == state.FREE)
-                    {
-                        location[x, y] = state.ROCK;
-                        i++;
-                    }
-
-                }
-
-            }
-
-            void ButtonPressed(int n)
-            {
-                switch (n)
-                {
-                    case 1:
-                        button1 = true;
-                        break;
-
-                    case 2:
-                        button2 = true;
-                        break;
-                    case 3:
-                        button3 = true;
-                        break;
-                    case 4:
-                        button4 = true;
-                        break;
-
-                    default:
-                        break;
-
-                }
-            }
+            default:
+                break;
+        }
+    }
 
     void background()
     {
@@ -214,30 +206,22 @@ public class MapControllerScript : MonoBehaviour
 				Instantiate(backTwo, new Vector3(i + width, Random.Range(-1, 1), j - height), Quaternion.identity);
             }
         }
-
-
-
     }
-            void Start()
-            {
+    void Start()
+    {
+        currentJuice = startingJuice;
+        startMap();
+        generatePath();
+        generateRocks();
+        printMap();
+        background();
+    }
 
-
-
-                currentJuice = startingJuice;
-                startMap();
-                generatePath();
-                generateRocks();
-                printMap();
-                background();
-
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.cyan);
+    // Update is called once per frame
+    void Update()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.cyan);
 
 
         if (Input.GetMouseButtonUp(1))
@@ -249,44 +233,29 @@ public class MapControllerScript : MonoBehaviour
                     hit.collider.gameObject.SendMessage("HitByRay");
             }
         }
-            if (Input.GetMouseButtonUp(0))
-                {
-                    if (Physics.Raycast(ray, out hit, 1000))
-                    {
+    if (Input.GetMouseButtonUp(0))
+        {
+            if (Physics.Raycast(ray, out hit, 1000))
+            {
 
-                        if (hit.collider.gameObject.CompareTag("cube") && button1 || button2 || button3 || button4)                    
-                            hit.collider.gameObject.SendMessage("HitByRay");
-
-
-                    
-                
-                        }
-
-                    button1 = false;
-                    button2 = false;
-                    button3 = false;
-                    button4 = false;
-
-
-
-
-                }
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (Physics.Raycast(ray, out hit, 1000))
-                    {
-
-                        if (hit.collider.gameObject.CompareTag("Button"))
-                            hit.collider.gameObject.SendMessage("HitByRay");
-                        
-                
-
-            }
-
-
-
+                if (hit.collider.gameObject.CompareTag("cube") && button1 || button2 || button3 || button4)                    
+                    hit.collider.gameObject.SendMessage("HitByRay");  
                 }
 
+            button1 = false;
+            button2 = false;
+            button3 = false;
+            button4 = false;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(ray, out hit, 1000))
+            {
+
+                if (hit.collider.gameObject.CompareTag("Button"))
+                    hit.collider.gameObject.SendMessage("HitByRay");
 
             }
         }
+    }
+}

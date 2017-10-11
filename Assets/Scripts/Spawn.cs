@@ -9,7 +9,7 @@ public class Spawn : MonoBehaviour {
     float nextSpawn;
     void Start ()
     {
-        spawnEnemy();
+        //spawnEnemy();
         nextSpawn = Time.time + spawnRate;
     }
 
@@ -17,11 +17,17 @@ public class Spawn : MonoBehaviour {
     {
         if(Time.time > nextSpawn)
         {
-            spawnEnemy();
+            //EnemySmall();
+            //spawnEnemy();
             nextSpawn += spawnRate;
-
         }
     }
+
+    void EnemySmall()
+    {
+            Instantiate(enemySmall, transform.position + new Vector3(0, 0.25f, 0), Quaternion.Euler(-90, 180, 0));
+    }
+
     void spawnEnemy()
     {
         switch (Random.Range(0, 4))
@@ -45,6 +51,5 @@ public class Spawn : MonoBehaviour {
             default:
                 break;
         }
-
     }
 }
