@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LivesTxt : MonoBehaviour {
     public MapControllerScript controller;
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        GetComponent<TextMesh>().text = controller.currentLife.ToString() ;
+
+
+    void Start()
+    {
+
+    }
+
+
+    void Update()
+    {
+        GetComponent<Text>().text = "Life: " + controller.currentLife.ToString();
 
     }
 }
+

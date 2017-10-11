@@ -9,14 +9,14 @@ public class cubeBack2 : MonoBehaviour {
 
 	void Start () {
 		Renderer rend = GetComponent<Renderer>();
-		rend.material.SetColor("_Color", new Color(Random.Range(0f, 130f) / 255f, Random.Range(0f, 60f) / 255f, Random.Range(0f,255f) / 255f, 1));
+        rend.material.SetColor("_Color", new Color(Random.Range(240f, 255f) / 255f, Random.Range(70f, 150f) / 255f, 0f / 255f, 1));
 
-		if (Random.Range (0, 2) == 0)
+        if (Random.Range (0, 2) == 0)
 			inc = true;
 		else
 			inc = false;
 		
-		speed = Random.Range (0.01f, 0.04f);
+		speed = Random.Range (0.0025f, 0.01f);
 
 	}
 
@@ -25,7 +25,7 @@ public class cubeBack2 : MonoBehaviour {
 
 		if (y > 0)
 			inc = false;
-		if (y < -1)
+		if (y < -0.5)
 			inc = true;
 
 		if (inc)
