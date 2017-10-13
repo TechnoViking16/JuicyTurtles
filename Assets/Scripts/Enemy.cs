@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -90,6 +91,10 @@ public class Enemy : MonoBehaviour {
         else//LLega al final
         {
             controller.currentLife -= damage;
+            if (controller.currentLife <= 0)
+            {
+                SceneManager.LoadScene("DeathScene");
+            }
             Destroy(gameObject);
         }
     }
